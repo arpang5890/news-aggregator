@@ -1,0 +1,106 @@
+{
+	"info": {
+		"_postman_id": "aa4a3150-14b3-41d5-b774-5bd793abdc64",
+		"name": "News Item APIs",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "243825",
+		"_collection_link": "https://grey-crater-6174.postman.co/workspace/BigParser-AG-Ganesh---WS~56e0c170-c767-4474-8258-80cea7131bfa/collection/243825-aa4a3150-14b3-41d5-b774-5bd793abdc64?action=share&source=collection_link&creator=243825"
+	},
+	"item": [
+		{
+			"name": "Health check",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/actuator/health",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"actuator",
+						"health"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get publishers",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/news-publishers",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"news-publishers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get latest news",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/news-items/latest",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"news-items",
+						"latest"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get news by source",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/news-items?source=FT&offset=0&limit=10",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"news-items"
+					],
+					"query": [
+						{
+							"key": "source",
+							"value": "FT"
+						},
+						{
+							"key": "offset",
+							"value": "0"
+						},
+						{
+							"key": "limit",
+							"value": "10"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

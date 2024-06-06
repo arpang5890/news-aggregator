@@ -1,0 +1,93 @@
+openapi: 3.0.0
+info:
+  title: News Aggregator API
+  description: API for aggregating news from various sources
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080
+
+tags:
+  - name: NewsPublisher
+    description: APIs for news publisher
+  - name: NewsResource
+    description: APIs for news resources
+
+paths:
+  /api/news-items:
+    get:
+      summary: Get news by sources
+      operationId: getNewsBySource
+      tags:
+        - NewsResource
+      parameters:
+        - name: source
+          in: query
+          description: Source of the news
+          required: true
+          schema:
+            type: string
+        - name: from
+          in: query
+          description: Start date for news (ISO 8601 format)
+          required: false
+          schema:
+            type: string
+            format: date-time
+        - name: to
+          in: query
+          description: End date for news (ISO 8601 format)
+          required: false
+          schema:
+            type: string
+            format: date-time
+        - name: offset
+          in: query
+          description: Pagination offset
+          required: false
+          schema:
+            type: integer
+            default: 0
+        - name: limit
+          in: query
+          description: Pagination limit
+          required: false
+          schema:
+            type: integer
+            default: 20
+      responses:
+        '200':
+          description: A list of news items
+          content:
+            application/json:
+              schema:
+                $ref: './schema/model.yaml#/NewsItemPaginatedResponse'
+
+  /api/news-items/latest:
+    get:
+      summary: Get the 5 latest news from each news publisher
+      operationId: getLatestNews
+      tags:
+        - NewsResource
+      responses:
+        '200':
+          description: Latest news items from each provider
+          content:
+            application/json:
+              schema:
+                $ref: './schema/model.yaml#/NewsItemsResponse'
+
+  /api/news-publishers:
+    get:
+      summary: Get all publishers
+      operationId: getAllNewsPublishers
+      tags:
+        - NewsPublisher
+      responses:
+        '200':
+          description: A list of news publishers
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: './schema/model.yaml#/NewsPublisherResponse'

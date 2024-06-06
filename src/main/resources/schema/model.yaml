@@ -1,0 +1,49 @@
+NewsPublisherResponse:
+  type: object
+  properties:
+    id:
+      type: string
+    name:
+      type: string
+
+NewsItemPaginatedResponse:
+  type: object
+  properties:
+    count:
+      type: long
+    items:
+      type: array
+      items:
+        $ref: '#/NewsItemResponse'
+
+NewsItemsResponse:
+  type: array
+  items:
+    $ref: '#/NewsItemResponse'
+
+NewsItemResponse:
+  type: object
+  properties:
+    guid:
+      type: string
+      format: uuid
+      example: "123e4567-e89b-12d3-a456-426614174000"
+    pubDate:
+      type: string
+      format: date-time
+      example: "2023-06-01T12:00:00Z"
+    publisher:
+      type: string
+      example: "News Publisher Name"
+    title:
+      type: string
+      example: "News Title"
+    link:
+      type: string
+      example: "http://example.com/news/123"
+    description:
+      type: string
+      example: "This is an example description of the news item."
+    content:
+      type: string
+      example: "This is the full content of the news item."
