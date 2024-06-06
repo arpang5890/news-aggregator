@@ -11,6 +11,14 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class NewsContentCrawlerService {
 
+  /**
+   * Fetches the content from the given URL.
+   *
+   * @param url the URL of the news content to fetch
+   * @return the fetched content as a String
+   *     <p>Note: This method is currently not working as expected. Looking for alternative
+   *     solutions due to rate limits + cloudflare security
+   */
   public String fetchContent(String url) {
     try {
       Document document = Jsoup.connect(url).get();
