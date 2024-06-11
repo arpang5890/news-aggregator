@@ -3,12 +3,16 @@ package com.aol.news.aggregator.ingestion.crawler;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
 
 @AllArgsConstructor
 @Slf4j
 public abstract class NewsArticleCrawlerHandler {
 
   protected final WebDriver webDriver;
+  private static final Duration TIMEOUT = Duration.ofSeconds(20);
 
   public String extractArticleContent(String url, int maxAttempts) {
     log.info("Getting content for url : {}", url);
@@ -18,7 +22,9 @@ public abstract class NewsArticleCrawlerHandler {
 
     while (retries < maxAttempts && !success) {
       try {
-        articleContent = getContent(url);
+        webDriver.get(url);
+        WebDriverWait webDriverWait = new WebDriverWait(webDriver, TIMEOUT);
+        articleContent = getContent(webDriverWait);
         success = true;
       } catch (Exception e) {
         retries++;
@@ -30,5 +36,5 @@ public abstract class NewsArticleCrawlerHandler {
     return articleContent;
   }
 
-  protected abstract String getContent(String url);
+  protected abstract String getContent(WebDriverWait wait);
 }
