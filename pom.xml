@@ -2,10 +2,10 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://www.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.example</groupId>
+    <groupId>com.aol</groupId>
     <artifactId>news-aggregator</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>rss-crawler</name>
+    <name>news-aggregator</name>
     <description>News Aggregator Service</description>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -30,6 +30,7 @@
         <modelmapper.version>3.1.1</modelmapper.version>
         <commons-collections4.version>4.4</commons-collections4.version>
         <openapi-generator-maven-plugin.version>6.6.0</openapi-generator-maven-plugin.version>
+        <bonigarcia-webdrivermanager.version>5.8.0</bonigarcia-webdrivermanager.version>
         <mysql.connector.version>8.0.32</mysql.connector.version>
         <failsafe.plugin.version>3.2.5</failsafe.plugin.version>
         <surefire.plugin.version>3.2.5</surefire.plugin.version>
@@ -144,6 +145,23 @@
         <dependency>
             <groupId>org.flywaydb</groupId>
             <artifactId>flyway-mysql</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-java</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-chrome-driver</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-support</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.github.bonigarcia</groupId>
+            <artifactId>webdrivermanager</artifactId>
+            <version>${bonigarcia-webdrivermanager.version}</version>
         </dependency>
         <dependency>
             <groupId>org.testcontainers</groupId>

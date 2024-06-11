@@ -4,15 +4,17 @@ import com.aol.news.aggregator.entity.NewsItem;
 import com.aol.news.aggregator.entity.NewsPublisher;
 import com.aol.news.aggregator.repository.NewsItemRepository;
 import com.aol.news.aggregator.repository.NewsPublisherRepository;
+import java.util.List;
+import java.util.Set;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Executor;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -22,6 +24,8 @@ public class NewsAggregatorScheduler {
   private final NewsPublisherRepository newsPublisherRepository;
   private final NewsItemRepository newsItemRepository;
   private final RssFeedParser rssFeedParser;
+  private final NewsContentCrawlerService newsContentCrawlerService;
+  private final Executor threadPoolTaskExecutor;
 
   @Value("${news.aggregator.schedule.enabled}")
   private boolean isEnabled;
@@ -51,9 +55,23 @@ public class NewsAggregatorScheduler {
 
       List<NewsItem> dbExistingNews =
           newsItemRepository.findByPublisherIdAndExternalIdIn(
-              publisher.getId(),
-              latestNewsItems.stream().map(NewsItem::getExternalId).collect(Collectors.toList()));
+              publisher.getId(), latestNewsItems.stream().map(NewsItem::getExternalId).toList());
       List<NewsItem> filteredLatestNewsItems = filterNewFeeds(latestNewsItems, dbExistingNews);
+
+      List<CompletableFuture<Void>> futures =
+          filteredLatestNewsItems.stream()
+              .map(
+                  newsItem ->
+                      CompletableFuture.runAsync(
+                          () ->
+                              newsItem.setContent(
+                                  newsContentCrawlerService.fetchArticleContent(
+                                      publisher.getId(), newsItem.getLink())),
+                          threadPoolTaskExecutor))
+              .toList();
+
+      // Wait for all futures to complete
+      CompletableFuture.allOf(futures.toArray(new CompletableFuture[0])).join();
 
       log.info(
           "Found {} new feeds for publisher: {}",
@@ -80,6 +98,6 @@ public class NewsAggregatorScheduler {
         dbExistingNews.stream().map(NewsItem::getExternalId).collect(Collectors.toSet());
     return latestNewsItems.stream()
         .filter(feed -> !existingExternalNewsId.contains(feed.getExternalId()))
-        .collect(Collectors.toList());
+        .toList();
   }
 }

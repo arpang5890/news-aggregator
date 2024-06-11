@@ -40,7 +40,10 @@ public class BaseIT {
     registry.add("spring.datasource.password", mySQLContainer::getPassword);
     registry.add("spring.datasource.hikari.initializationFailTimeout", () -> "60000");
     registry.add("spring.datasource.hikari.connection-test-query", () -> "SELECT 1");
+
+    // disabled scheduler for ITs
     registry.add("news.aggregator.schedule.enabled", () -> "false");
+    registry.add("selenium.enabled", () -> "false");
   }
 
   @AfterEach

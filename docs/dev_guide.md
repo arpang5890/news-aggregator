@@ -38,6 +38,12 @@ Run mysql db locally via docker compose. Go to {projectDirectory}/docker/
 docker-compose up
 ```
 
+
+###### Note: Enable/Disbaled Selenium property in application.yaml:
+```properties
+selenium.enabled=false
+```
+
 #### Run news aggregator application using intellij or  maven command
 
 Either use intellij runner, or use maven command (from project root):
@@ -46,13 +52,27 @@ Either use intellij runner, or use maven command (from project root):
 mvn spring-boot:run -Dspring-boot.run.profiles=default
 ``` 
 
-#### Run news aggregator application using docker
+#### Run news aggregator application using docker without selenium
 
 ```bash
 #build docker image
 docker build -t news_aggregator -f docker/Dockerfile .
+# Run application usign docker ()
+docker run -e SPRING_PROFILES_ACTIVE=local-docker -d --name news_aggregator --network docker_news_aggregator_net -p 8080:8080 news_aggregator
+```
+
+#### Run news aggregator application using docker with selenium
+Note: Only supported for mac-x64 arch for now.
+
+```bash
+#build docker image
+docker build -t news_aggregator -f docker/Dockerfile_selenium_mac-x64 .
 # Run application usign docker
-docker run -d --name news_aggregator -p 8080:8080 news_aggregator
+docker run -e SPRING_PROFILES_ACTIVE=local-docker -d --name news_aggregator --network docker_news_aggregator_net -p 8080:8080 news_aggregator
+```
+
+Some basic commands around docker
+```bash
 # check logs
 docker logs -f news_aggregator
 # stop application
@@ -60,9 +80,9 @@ docker stop news_aggregator
 # or stop using ps
 docker ps
 docker stop <container_id_or_name>
+```
 
 ### Integration tests
-
 By default, the basic maven build runs all unit tests and IT-s.
 If, for some reason, run the build without integration tests (using standard failsafe plugin
 property):
