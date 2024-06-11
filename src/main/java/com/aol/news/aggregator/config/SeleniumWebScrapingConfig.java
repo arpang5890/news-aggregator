@@ -26,7 +26,6 @@ public class SeleniumWebScrapingConfig {
     CrawlerConfig crawlerConfig = new CrawlerConfig();
     crawlerConfig.addCrawlerHandler("NYT", new NYTNewsCrawlerHandler(webDriver));
     crawlerConfig.addCrawlerHandler("NYT", new BBCNewsArticleCrawlerHandler(webDriver));
-    WebDriverManager.chromedriver().setup();
     return crawlerConfig;
   }
 
