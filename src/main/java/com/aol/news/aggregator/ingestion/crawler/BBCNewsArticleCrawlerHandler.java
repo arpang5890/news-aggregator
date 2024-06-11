@@ -9,10 +9,9 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.springframework.stereotype.Service;
 
 @Slf4j
-public class BBCNewsArticleCrawlerHandler extends BaseNewsArticleCrawlerHandler {
+public class BBCNewsArticleCrawlerHandler extends NewsArticleCrawlerHandler {
 
   private static final By ARTICLE_SELECTOR = By.cssSelector("article");
   private static final By PARAGRAPH_TAG = By.tagName("p");

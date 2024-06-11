@@ -6,7 +6,7 @@ import org.openqa.selenium.WebDriver;
 
 @AllArgsConstructor
 @Slf4j
-public abstract class BaseNewsArticleCrawlerHandler {
+public abstract class NewsArticleCrawlerHandler {
 
   protected final WebDriver webDriver;
 

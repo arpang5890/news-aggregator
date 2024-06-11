@@ -11,7 +11,7 @@ import java.time.Duration;
 import java.util.List;
 
 @Slf4j
-public class NYTNewsCrawlerHandler extends BaseNewsArticleCrawlerHandler {
+public class NYTNewsCrawlerHandler extends NewsArticleCrawlerHandler {
 
   private static final By ARTICLE_BODY_SELECTOR = By.cssSelector("section[name='articleBody']");
   private static final By PARAGRAPH_TAG = By.tagName("p");

@@ -8,14 +8,14 @@ import java.util.Map;
 @Getter
 public class CrawlerConfig {
 
-  private final Map<String, BaseNewsArticleCrawlerHandler> crawlerHandlers;
+  private final Map<String, NewsArticleCrawlerHandler> crawlerHandlers;
 
   public CrawlerConfig() {
     this.crawlerHandlers = new HashMap<>();
   }
 
   public void addCrawlerHandler(
-      String newsPublisherId, BaseNewsArticleCrawlerHandler newsArticleCrawlerHandler) {
+      String newsPublisherId, NewsArticleCrawlerHandler newsArticleCrawlerHandler) {
     crawlerHandlers.put(newsPublisherId, newsArticleCrawlerHandler);
   }
 }
